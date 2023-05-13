@@ -21,7 +21,7 @@ const Home = () => {
                 </VStack>
                 <HStack w='100%' justifyContent='space-around' alignItems='center'>
                     <Link to='/task1'><Button px='50px' py='36px' borderRadius='10px' bg='#060825' color='#FAFAFA' fontWeight='500' fontSize='30px' boxShadow='lg' rounded='md' _hover={{bg: '#FFFFFF', border: '1px solid #060825', color: '#060825'}}>Task 1</Button></Link>
-                    <Link to='/task1'><Button px='50px' py='36px' borderRadius='10px' bg='#060825' color='#FAFAFA' fontWeight='500' fontSize='30px' boxShadow='lg' rounded='md' _hover={{bg: '#FFFFFF', border: '1px solid #060825', color: '#060825'}}>Task 2</Button></Link>
+                    <Link to='/task2'><Button px='50px' py='36px' borderRadius='10px' bg='#060825' color='#FAFAFA' fontWeight='500' fontSize='30px' boxShadow='lg' rounded='md' _hover={{bg: '#FFFFFF', border: '1px solid #060825', color: '#060825'}}>Task 2</Button></Link>
                 </HStack>
 
             </VStack>

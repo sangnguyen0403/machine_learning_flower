@@ -1,6 +1,7 @@
 import { Button, Center, Flex, HStack, Heading, Image, Select, Tag, VStack } from "@chakra-ui/react";
 import '../App.css';
 import image from "../images/background.svg"
+import test from "../images/test.png"
 const Task1 = () => {
     const handleUploadImage = (file) => {
         console.log(file)
@@ -68,7 +69,7 @@ const Task1 = () => {
                         <Image
                             boxSize="50%"
                             // objectFit="cover"
-                            src={image}
+                            src={test}
                             alt="Dan Abramov"
                             borderRadius='20px'
                         // mt='2'
@@ -88,7 +89,7 @@ const Task1 = () => {
                 <HStack w='100%' justifyContent='space-around' alignItems='center'>
                     <Center w='100%'>
                         <VStack w='100%' justify='center' alignItems='center'>
-                            <Button px='36px' py='12px' borderRadius='10px' bg='#060825' color='#FAFAFA' fontWeight='500' fontSize='16px' boxShadow='lg' rounded='md' _hover={{ bg: '#FFFFFF', border: '1px solid #060825', color: '#060825' }}>Execute</Button>
+                            <Button px='36px' py='12px' borderRadius='10px' bg='#060825' color='#FAFAFA' fontWeight='500' fontSize='16px' boxShadow='lg' rounded='md' _hover={{ bg: '#FFFFFF', border: '1px solid #060825', color: '#060825' }}>Generate</Button>
                             <Tag size='sm' key={'sm'} variant='solid' bg='#060825' color='#FAFAFA'>
                                 Output Image
                             </Tag>
