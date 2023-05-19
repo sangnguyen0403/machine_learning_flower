@@ -89,7 +89,7 @@ const Task1 = () => {
             height="100vh"
         >
 			<Link to="/"><Button position="absolute" top="10px" left="10px">Back</Button></Link>
-            <VStack w='59%' h='100%' pt='10' spacing={4}>
+            <VStack w='56%' h='100%' pt='10' spacing={4}>
                 <Center w='100%'>
                     <HStack w='100%' justifyContent='space-between' alignItems='center'>
                         <VStack w='50%'>
@@ -189,7 +189,6 @@ const Task1 = () => {
                         </VStack>
                     </Center>
                 </HStack>
-
             </VStack>
         </Center >
     );

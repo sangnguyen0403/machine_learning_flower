@@ -90,10 +90,10 @@ const Task2 = () => {
             height="100vh"
         >
 			<Link to="/"><Button position="absolute" top="10px" left="10px">Back</Button></Link>
-            <VStack w='49%' h='100%' pt='10' spacing={7}>
+            <VStack w='60%' h='100%' pt='10' spacing={7}>
 
-                <HStack w='100%' justifyContent='space-around' alignItems='center'>
-                    <HStack w='55%' p='3' justifyContent='flex-end'>
+                <VStack w='100%' justifyContent='center' alignItems='end'>
+                    <VStack w='55%' p='3' justifyContent='center'>
                         {/* <Slider */}
                         {/*     id='slider' */}
                         {/*     defaultValue={1} */}
@@ -126,9 +126,9 @@ const Task2 = () => {
                         {/*     </Tooltip> */}
                         {/* </Slider> */}
 						<div></div>
-                        <Button bg='#060825' color='#FAFAFA' m='4rem' px='30px' py='12px' borderRadius='10px' boxShadow='lg' rounded='md' _hover={{ bg: '#FFFFFF', border: '1px solid #060825', color: '#060825' }} onClick={generateImage}>Generate</Button>
-                    </HStack>
-                </HStack>
+                        <Button bg='#060825' color='#FAFAFA' m='4rem' px='30px' py='12px' ml='4rem' borderRadius='10px' boxShadow='lg' rounded='md' _hover={{ bg: '#FFFFFF', border: '1px solid #060825', color: '#060825' }} onClick={generateImage}>Generate</Button>
+                    </VStack>
+                </VStack>
 
                 <HStack w='100%' justifyContent='flex-start' alignItems='center'>
                     <Center w='45%'>

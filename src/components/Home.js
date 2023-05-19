@@ -14,7 +14,7 @@ const Home = () => {
             width="100vw"
             height="100vh"
         >
-            <VStack w='59%' h='100%' pt='10' spacing={10}>
+            <VStack w='65%' h='100%' pt='10' spacing={10}>
                 <VStack w='100%' gap={6}>
                     <Heading as='h1' size='3xl' letterSpacing='wider' noOfLines={1}>FLOWERS</Heading>
                     <Heading as='h4' size='md' color='#777777'>Find the bouquet you want!</Heading>
