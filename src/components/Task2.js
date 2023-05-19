@@ -1,31 +1,86 @@
 import '../App.css';
+import { Link } from 'react-router-dom';
 import {
-    Box, Button, Center, Flex, Grid, GridItem, HStack, Heading, Image, Input, Select, Stack, VStack, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Tooltip
+    Spinner, Box, Button, Center, Flex, Grid, GridItem, HStack, Heading, Image, Input, Select, Stack, VStack, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Tooltip
 } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react'
+import axios from "axios";
 import image from "../images/background.svg"
 import image2 from "../images/test.png"
 import SliderBar from './SliderBar';
 import { useState, useEffect } from 'react';
 import FullImageDisplay from './FullImage';
+import { API_ENDPOINT } from "../App"
 
 const Task2 = () => {
-    const handleUploadImage = (file) => {
-        console.log(file)
-    }
+	const toast = useToast()
     const [sliderValue, setSliderValue] = useState(1)
     const [showTooltip, setShowTooltip] = useState(false)
     const [displayImage, setDisplayImage] = useState([])
+	const [originalImage, setOriginalImage] = useState(null)
+	const [originalImageFile, setOriginalImageFile] = useState(null)
+	const [loading, setLoading] = useState(false)
 
+    // const images = [image, image, image, image]
     useEffect(() => {
         const result = []
-        for(let i = 0 ; i < sliderValue; i++){
-            result.push(images[i])
+        for(let i = 0 ; i < 4; i++){
+            result.push(image)
         }
         setDisplayImage(result)
     },[sliderValue])
 
 
-    const images = [image, image2, image, image2]
+	const handleOriginalImage = (file) =>{
+		if (file) {
+			let reader = new FileReader();
+
+			reader.onload = (e) => {
+				setOriginalImage(e.target.result)
+			};
+
+			reader.readAsDataURL(file);
+			setOriginalImageFile(file)
+		}
+	}
+
+	const generateImage = async () => {
+		if (originalImage == null) {
+			toast({
+				title: 'Error',
+				description: "Please choose an original image and a reference image.",
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			})
+			return
+		}
+
+		setLoading(true)
+		try {
+			const formData = new FormData();
+			formData.append("file", originalImageFile)
+			const res = await axios.post(API_ENDPOINT + "/generate_image", formData)
+			if (res.data.success) {
+				const images = []
+				for (let i = 0; i < 4; i++) {
+					images.push(API_ENDPOINT + `/get_image?task_id=2&image_id=${i}&time=` + (new Date()).getTime())
+				}
+				setDisplayImage(images)
+			}
+			setLoading(false)
+		} catch (e) {
+			setLoading(false)
+			toast({
+				title: 'Error',
+				description: e.message,
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			})
+		}
+	}
+
     return (
         <Center
             bgImage={image}
@@ -34,42 +89,44 @@ const Task2 = () => {
             width="100vw"
             height="100vh"
         >
-            <VStack w='59%' h='100%' pt='10' spacing={7}>
+			<Link to="/"><Button position="absolute" top="10px" left="10px">Back</Button></Link>
+            <VStack w='49%' h='100%' pt='10' spacing={7}>
 
                 <HStack w='100%' justifyContent='space-around' alignItems='center'>
-                    <HStack w='95%' p='3' justifyContent='flex-end'>
-                        <Slider
-                            id='slider'
-                            defaultValue={1}
-                            min={0}
-                            max={4}
-                            colorScheme='teal'
-                            onChange={(v) => setSliderValue(v)}
-                            onMouseEnter={() => setShowTooltip(true)}
-                            onMouseLeave={() => setShowTooltip(false)}
-                            w='35%'
-                        >
-                            <SliderMark value={2} mt='1' ml='-2.5' fontSize='sm' color='#060825'>
-                                2
-                            </SliderMark>
-                            <SliderMark value={4} mt='1' ml='-2.5' fontSize='sm' color='#060825'>
-                                4
-                            </SliderMark>
-                            <SliderTrack bg='#060825'>
-                                <SliderFilledTrack bg='#060825' />
-                            </SliderTrack>
-                            <Tooltip
-                                hasArrow
-                                bg='#060825'
-                                color='white'
-                                placement='top'
-                                isOpen={showTooltip}
-                                label={`${sliderValue}`}
-                            >
-                                <SliderThumb border='1px' borderColor='#060825' />
-                            </Tooltip>
-                        </Slider>
-                        <Button bg='#060825' color='#FAFAFA' m='4rem' px='30px' py='12px' borderRadius='10px' boxShadow='lg' rounded='md' _hover={{ bg: '#FFFFFF', border: '1px solid #060825', color: '#060825' }}>Generate</Button>
+                    <HStack w='55%' p='3' justifyContent='flex-end'>
+                        {/* <Slider */}
+                        {/*     id='slider' */}
+                        {/*     defaultValue={1} */}
+                        {/*     min={0} */}
+                        {/*     max={4} */}
+                        {/*     colorScheme='teal' */}
+                        {/*     onChange={(v) => setSliderValue(v)} */}
+                        {/*     onMouseEnter={() => setShowTooltip(true)} */}
+                        {/*     onMouseLeave={() => setShowTooltip(false)} */}
+                        {/*     w='35%' */}
+                        {/* > */}
+                        {/*     <SliderMark value={2} mt='1' ml='-2.5' fontSize='sm' color='#060825'> */}
+                        {/*         2 */}
+                        {/*     </SliderMark> */}
+                        {/*     <SliderMark value={4} mt='1' ml='-2.5' fontSize='sm' color='#060825'> */}
+                        {/*         4 */}
+                        {/*     </SliderMark> */}
+                        {/*     <SliderTrack bg='#060825'> */}
+                        {/*         <SliderFilledTrack bg='#060825' /> */}
+                        {/*     </SliderTrack> */}
+                        {/*     <Tooltip */}
+                        {/*         hasArrow */}
+                        {/*         bg='#060825' */}
+                        {/*         color='white' */}
+                        {/*         placement='top' */}
+                        {/*         isOpen={showTooltip} */}
+                        {/*         label={`${sliderValue}`} */}
+                        {/*     > */}
+                        {/*         <SliderThumb border='1px' borderColor='#060825' /> */}
+                        {/*     </Tooltip> */}
+                        {/* </Slider> */}
+						<div></div>
+                        <Button bg='#060825' color='#FAFAFA' m='4rem' px='30px' py='12px' borderRadius='10px' boxShadow='lg' rounded='md' _hover={{ bg: '#FFFFFF', border: '1px solid #060825', color: '#060825' }} onClick={generateImage}>Generate</Button>
                     </HStack>
                 </HStack>
 
@@ -82,7 +139,7 @@ const Task2 = () => {
                                     id="files"
                                     className="upload_btn"
                                     onChange={event => {
-                                        handleUploadImage(
+                                        handleOriginalImage(
                                             event.target.files[0]
                                         );
                                     }}
@@ -97,7 +154,7 @@ const Task2 = () => {
                             <Image
                                 boxSize="55%"
                                 // objectFit="cover"
-                                src={image}
+								src={originalImage ? originalImage : image}
                                 alt="Dan Abramov"
                                 borderRadius='20px'
                             // mt='2'
@@ -105,10 +162,17 @@ const Task2 = () => {
                         </VStack>
                     </Center>
                     <HStack w='55%' px='6'>
+						{loading ? <Spinner
+						  thickness='4px'
+						  speed='0.65s'
+						  emptyColor='gray.200'
+						  color='blue.500'
+						  size='xl'
+						/> :
                         <Grid templateColumns='repeat(2, 1fr)' gap={6} w='100%'>
                             {displayImage.map((item, index) => (
 
-                                <GridItem w='100%' key='index'>
+                                <GridItem w='100%' key='index' cursor="pointer">
                                     {/* <Image
                                         boxSize="100%"
                                         // objectFit="cover"
@@ -119,9 +183,9 @@ const Task2 = () => {
                                     /> */}
                                     <FullImageDisplay image={item}/>
                                 </GridItem>
-                            
+
                             ))}
-                        </Grid>
+                        </Grid>}
                     </HStack>
                 </HStack>
             </VStack>
